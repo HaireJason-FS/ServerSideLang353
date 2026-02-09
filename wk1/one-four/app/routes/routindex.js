@@ -51,10 +51,8 @@
 const express = require("express");
 const router = express.Router();
 
-/**
- * In-memory storage
- * This resets every time you restart the server (that’s okay for this assignment).
- */
+//In-memory storage
+
 let items = [
   { id: 45, data: "First item" },
   { id: 89, data: "Second item" },
