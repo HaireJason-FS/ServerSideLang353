@@ -1,0 +1,20 @@
+{
+  "name": "two-three",
+  "version": "1.0.0",
+  "description": "",
+  "main": "two-three.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "nodemon server.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "dependencies": {
+    "dotenv": "^17.2.4",
+    "express": "^5.2.1",
+    "morgan": "^1.10.1",
+    "nodemon": "^3.1.11"
+  }
+}
