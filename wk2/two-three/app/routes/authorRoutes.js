@@ -1,45 +1,21 @@
 const router = require("express").Router();
+const {
+  createAuthor,
+  deleteAuthor,
+  getAllAuthors,
+  getAuthorById,
+  updateAuthor,
+} = require("../controller/authorController");
 
-router.get("/", (req, res) => {
-  res.status(200).json({ 
-    success: true ,
-    message: `${req.method} - Request made to Author endpoint`, 
-  });
-});
+router.get("/", getAllAuthors);
 
-router.get("/:id", (req, res) => {
-  const { id } = req.params;
-  res.status(200).json({ 
-    id,
-    success: true ,
-    message: `${req.method} - Request made to author endpoint`, 
-  });
-});
+router.get("/:id", getAuthorById);
 
-router.post("/", (req, res) => {
-  res.status(200).json({ 
-    success: true ,
-    message: `${req.method} - Request made to author endpoint`, 
-  });
-});
+router.post("/", createAuthor);
 
-router.put("/:id", (req, res) => {
-  const { id } = req.params;
-  res.status(200).json({ 
-    id,
-    success: true ,
-    message: `${req.method} - Request made to author endpoint`, 
-  });
-});
+router.put("/:id", updateAuthor);
 
-router.delete("/:id", (req, res) => {
-  const { id } = req.params;
-  res.status(200).json({ 
-    id,
-    success: true ,
-    message: `${req.method} - Request made to author endpoint`, 
-  });
-});
+router.delete("/:id", deleteAuthor);
 
 
 module.exports = router;
