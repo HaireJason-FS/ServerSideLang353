@@ -1,6 +1,7 @@
 const express = require('express');
 const dotenv = require('dotenv');
 const connectDB = require('./config/db');
+const { SERVER_ERROR } = require('./utils/messages');
 
 // Load env vars
 dotenv.config();
@@ -20,7 +21,7 @@ app.use('/api/invoices', require('./routes/invoiceRoutes'));
 // Global error handler
 app.use((err, req, res, next) => {
   console.error(err.stack);
-  res.status(500).json({ message: 'Something went wrong!' });
+  res.status(500).json({ message: SERVER_ERROR });
 });
 
 const PORT = process.env.PORT || 5000;

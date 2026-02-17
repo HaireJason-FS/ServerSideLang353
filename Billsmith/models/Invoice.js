@@ -5,7 +5,6 @@ const invoiceSchema = new mongoose.Schema(
     client: {
       type: mongoose.Schema.Types.ObjectId,
       ref: 'Client',
-      required: [true, 'Client reference is required'],
     },
     amount: {
       type: Number,

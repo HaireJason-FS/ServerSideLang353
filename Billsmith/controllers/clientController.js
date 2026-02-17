@@ -1,10 +1,11 @@
 const Client = require('../models/Client');
+const { CLIENT_NOT_FOUND, CLIENT_REMOVED } = require('../utils/messages');
 
 // @desc    Get all clients
 // @route   GET /api/clients
 const getClients = async (req, res) => {
   try {
-    const clients = await Client.find();
+    const clients = await Client.find().select('-__v');
     res.status(200).json(clients);
   } catch (error) {
     res.status(500).json({ message: error.message });
@@ -15,9 +16,9 @@ const getClients = async (req, res) => {
 // @route   GET /api/clients/:id
 const getClientById = async (req, res) => {
   try {
-    const client = await Client.findById(req.params.id);
+    const client = await Client.findById(req.params.id).select('-__v');
     if (!client) {
-      return res.status(404).json({ message: 'Client not found' });
+      return res.status(404).json({ message: CLIENT_NOT_FOUND });
     }
     res.status(200).json(client);
   } catch (error) {
@@ -43,9 +44,9 @@ const updateClient = async (req, res) => {
     const client = await Client.findByIdAndUpdate(req.params.id, req.body, {
       new: true,
       runValidators: true,
-    });
+    }).select('-__v');
     if (!client) {
-      return res.status(404).json({ message: 'Client not found' });
+      return res.status(404).json({ message: CLIENT_NOT_FOUND });
     }
     res.status(200).json(client);
   } catch (error) {
@@ -59,9 +60,9 @@ const deleteClient = async (req, res) => {
   try {
     const client = await Client.findByIdAndDelete(req.params.id);
     if (!client) {
-      return res.status(404).json({ message: 'Client not found' });
+      return res.status(404).json({ message: CLIENT_NOT_FOUND });
     }
-    res.status(200).json({ message: 'Client removed' });
+    res.status(200).json({ message: CLIENT_REMOVED });
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
