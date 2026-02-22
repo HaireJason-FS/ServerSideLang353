@@ -4,12 +4,77 @@ const { INVOICE_NOT_FOUND, INVOICE_REMOVED, CLIENT_NOT_FOUND } = require('../uti
 
 // @desc    Get all invoices (populated with client info)
 // @route   GET /api/invoices
+// @desc    Get all invoices (populated with client info) + filtering/select/sort/pagination
+// @route   GET /api/invoices
 const getInvoices = async (req, res) => {
   try {
-    const invoices = await Invoice.find()
-      .select('-__v')
+    // 1) Pagination
+    const page = parseInt(req.query.page, 10) || 1;
+    const limit = parseInt(req.query.limit, 10) || 10;
+    const skip = (page - 1) * limit;
+
+    // 2) Filtering (Mongo operators)
+    // Examples:
+    // /api/invoices?minTotal=100&maxTotal=500
+    // /api/invoices?statusIn=sent,paid
+    // Combine:
+    // /api/invoices?minTotal=100&maxTotal=500&statusIn=sent,paid
+    const filter = {};
+
+    // $gte / $lte on total
+    if (req.query.minTotal || req.query.maxTotal) {
+      filter.total = {};
+      if (req.query.minTotal) filter.total.$gte = Number(req.query.minTotal);
+      if (req.query.maxTotal) filter.total.$lte = Number(req.query.maxTotal);
+    }
+
+    // $in on status
+    if (req.query.statusIn) {
+      const statuses = req.query.statusIn.split(',').map((s) => s.trim());
+      filter.status = { $in: statuses };
+    }
+
+    // (Optional) filter by client id if you want:
+    // /api/invoices?clientId=xxxx
+    if (req.query.clientId) {
+      filter.client = req.query.clientId;
+    }
+
+    // 3) Select (projection) via query string
+    // Use commas in URL:
+    // /api/invoices?select=total,status,client
+    // /api/invoices?select=-__v,-updatedAt
+    // Default: keep your -__v behavior if no select param provided
+    const select = req.query.select
+      ? req.query.select.split(',').join(' ')
+      : '-__v';
+
+    // 4) Sort (required on at least one endpoint)
+    // /api/invoices?sort=total
+    // /api/invoices?sort=-createdAt
+    const sort = req.query.sort
+      ? req.query.sort.split(',').join(' ')
+      : '-createdAt';
+
+    // 5) Query (with pagination)
+    const total = await Invoice.countDocuments(filter);
+
+    const invoices = await Invoice.find(filter)
+      .select(select)
+      .sort(sort)
+      .skip(skip)
+      .limit(limit)
       .populate('client', 'businessName contactEmail');
-    res.status(200).json(invoices);
+
+    res.status(200).json({
+      success: true,
+      page,
+      limit,
+      total,
+      totalPages: Math.ceil(total / limit),
+      results: invoices.length,
+      data: invoices,
+    });
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
