@@ -1,0 +1,403 @@
+{
+	"id": "7f5809ab-dc71-49a5-a0ee-ef73e894097b",
+	"name": "Module Tests - Queries",
+	"timestamp": "2026-02-23T00:29:03.466Z",
+	"collection_id": "52173812-91313586-c9b9-4d05-8251-abddcb12e47a",
+	"folder_id": 0,
+	"environment_id": "0",
+	"totalPass": 26,
+	"delay": 0,
+	"persist": true,
+	"status": "finished",
+	"startedAt": "2026-02-23T00:29:02.296Z",
+	"totalFail": 0,
+	"results": [
+		{
+			"id": "8b70c902-ec4f-4afc-87c6-7136a3b72cf2",
+			"name": "Filter Range + Select + Limit",
+			"url": "localhost:5000/api/invoices?minAmount=100&maxAmount=2000&select=amount,status,dueDate&limit=3&page=1",
+			"time": 13,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"200 OK": true,
+				"Returned <= limit": true,
+				"Select only requested fields (amount/status/dueDate)": true,
+				"Range filter works (200..2000)": true
+			},
+			"testPassFailCounts": {
+				"200 OK": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Returned <= limit": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Select only requested fields (amount/status/dueDate)": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Range filter works (200..2000)": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				13
+			],
+			"allTests": [
+				{
+					"200 OK": true,
+					"Returned <= limit": true,
+					"Select only requested fields (amount/status/dueDate)": true,
+					"Range filter works (200..2000)": true
+				}
+			]
+		},
+		{
+			"id": "85aa5a8e-20e6-49b6-a66d-7ee4c4461583",
+			"name": "Pagination Test (skip + limit)",
+			"url": "http://localhost:5000/api/invoices?page=2&limit=2",
+			"time": 5,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"200 OK": true,
+				"Returned <= limit": true,
+				"Page/limit reflect request (if API returns metadata)": true,
+				"Different page returns different results (if enough invoices exist)": true
+			},
+			"testPassFailCounts": {
+				"200 OK": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Returned <= limit": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Page/limit reflect request (if API returns metadata)": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Different page returns different results (if enough invoices exist)": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				5
+			],
+			"allTests": [
+				{
+					"200 OK": true,
+					"Returned <= limit": true,
+					"Page/limit reflect request (if API returns metadata)": true,
+					"Different page returns different results (if enough invoices exist)": true
+				}
+			]
+		},
+		{
+			"id": "aa0be48e-9294-40e9-94c6-39add64b6cb7",
+			"name": "Cont Pagination",
+			"url": "http://localhost:5000/api/invoices?page=1&limit=2",
+			"time": 4,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"200 OK": true,
+				"Returned <= limit": true,
+				"Different page returns different results (if enough invoices exist)": true
+			},
+			"testPassFailCounts": {
+				"200 OK": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Returned <= limit": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Different page returns different results (if enough invoices exist)": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				4
+			],
+			"allTests": [
+				{
+					"200 OK": true,
+					"Returned <= limit": true,
+					"Different page returns different results (if enough invoices exist)": true
+				}
+			]
+		},
+		{
+			"id": "f0cf7225-9f48-4290-84ce-b6abec2bc819",
+			"name": "Sort Test",
+			"url": "localhost:5000/api/invoices?sort=-amount&limit=10&page=1",
+			"time": 5,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"200 OK": true,
+				"Sorted by amount DESC": true
+			},
+			"testPassFailCounts": {
+				"200 OK": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Sorted by amount DESC": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				5
+			],
+			"allTests": [
+				{
+					"200 OK": true,
+					"Sorted by amount DESC": true
+				}
+			]
+		},
+		{
+			"id": "51d74263-3364-47cf-a131-8bee59d51dc0",
+			"name": "Ascending",
+			"url": "http://localhost:5000/api/invoices?sort=amount&limit=10&page=1",
+			"time": 5,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"200 OK": true,
+				"Sorted by amount ASC": true
+			},
+			"testPassFailCounts": {
+				"200 OK": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Sorted by amount ASC": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				5
+			],
+			"allTests": [
+				{
+					"200 OK": true,
+					"Sorted by amount ASC": true
+				}
+			]
+		},
+		{
+			"id": "0804c091-b761-45d3-b656-06cb84832468",
+			"name": "Filter + select + limit",
+			"url": "localhost:5000/api/clients?minRate=150&maxRate=300&select=businessName,monthlyRate,contactEmail&limit=3&page=1",
+			"time": 4,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"200 OK": true,
+				"Returned <= limit": true,
+				"Select includes requested fields": true,
+				"Range filter works (150..300)": true
+			},
+			"testPassFailCounts": {
+				"200 OK": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Returned <= limit": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Select includes requested fields": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Range filter works (150..300)": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				4
+			],
+			"allTests": [
+				{
+					"200 OK": true,
+					"Returned <= limit": true,
+					"Select includes requested fields": true,
+					"Range filter works (150..300)": true
+				}
+			]
+		},
+		{
+			"id": "01460274-bb24-4163-a1b9-678683db0aec",
+			"name": "Pagination",
+			"url": "localhost:5000/api/clients?page=2&limit=2",
+			"time": 4,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"200 OK": true,
+				"Returned <= limit": true,
+				"Page/limit reflect request (if API returns metadata)": true
+			},
+			"testPassFailCounts": {
+				"200 OK": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Returned <= limit": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Page/limit reflect request (if API returns metadata)": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				4
+			],
+			"allTests": [
+				{
+					"200 OK": true,
+					"Returned <= limit": true,
+					"Page/limit reflect request (if API returns metadata)": true
+				}
+			]
+		},
+		{
+			"id": "d251a44f-0f06-4bb5-94c0-e5737dcf90a5",
+			"name": "Sort Both Directions",
+			"url": "localhost:5000/api/clients?sort=-monthlyRate&limit=10&page=1",
+			"time": 4,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"200 OK": true,
+				"Sorted by monthlyRate DESC": true
+			},
+			"testPassFailCounts": {
+				"200 OK": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Sorted by monthlyRate DESC": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				4
+			],
+			"allTests": [
+				{
+					"200 OK": true,
+					"Sorted by monthlyRate DESC": true
+				}
+			]
+		},
+		{
+			"id": "579d3efd-37db-4dae-bfb7-0b84515f16c6",
+			"name": "Asc",
+			"url": "localhost:5000/api/clients?sort=monthlyRate&limit=10&page=1",
+			"time": 4,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"200 OK": true,
+				"Sorted by monthlyRate ASC": true
+			},
+			"testPassFailCounts": {
+				"200 OK": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Sorted by monthlyRate ASC": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				4
+			],
+			"allTests": [
+				{
+					"200 OK": true,
+					"Sorted by monthlyRate ASC": true
+				}
+			]
+		}
+	],
+	"count": 1,
+	"totalTime": 48,
+	"collection": {
+		"requests": [
+			{
+				"id": "8b70c902-ec4f-4afc-87c6-7136a3b72cf2",
+				"method": "GET"
+			},
+			{
+				"id": "85aa5a8e-20e6-49b6-a66d-7ee4c4461583",
+				"method": "GET"
+			},
+			{
+				"id": "aa0be48e-9294-40e9-94c6-39add64b6cb7",
+				"method": "GET"
+			},
+			{
+				"id": "f0cf7225-9f48-4290-84ce-b6abec2bc819",
+				"method": "GET"
+			},
+			{
+				"id": "51d74263-3364-47cf-a131-8bee59d51dc0",
+				"method": "GET"
+			},
+			{
+				"id": "0804c091-b761-45d3-b656-06cb84832468",
+				"method": "GET"
+			},
+			{
+				"id": "01460274-bb24-4163-a1b9-678683db0aec",
+				"method": "GET"
+			},
+			{
+				"id": "d251a44f-0f06-4bb5-94c0-e5737dcf90a5",
+				"method": "GET"
+			},
+			{
+				"id": "579d3efd-37db-4dae-bfb7-0b84515f16c6",
+				"method": "GET"
+			}
+		]
+	}
+}
