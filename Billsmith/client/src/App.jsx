@@ -1,35 +1,37 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import React, { useState } from "react";
+import ClientsPage from "./pages/ClientsPage";
+import InvoicesPage from "./pages/InvoicesPage";
 
-function App() {
-  const [count, setCount] = useState(0)
+export default function App() {
+  const [tab, setTab] = useState("clients");
 
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
-}
+    <div className="app">
+      <header className="topbar">
+        <div className="brand">
+          <div className="brand__title">BillSmith</div>
+          <div className="brand__sub">Query-powered collections</div>
+        </div>
 
-export default App
+        <nav className="tabs">
+          <button
+            className={`tab ${tab === "clients" ? "is-active" : ""}`}
+            onClick={() => setTab("clients")}
+          >
+            Clients
+          </button>
+          <button
+            className={`tab ${tab === "invoices" ? "is-active" : ""}`}
+            onClick={() => setTab("invoices")}
+          >
+            Invoices
+          </button>
+        </nav>
+      </header>
+
+      <main className="container">
+        {tab === "clients" ? <ClientsPage /> : <InvoicesPage />}
+      </main>
+    </div>
+  );
+}
